@@ -1,6 +1,8 @@
 import "dotenv/config";
 import express from "express";
 import connectToDB from "./utils/db/mongoDBConnection.js";
+import usersRoutes from "./routes/users.js";
+import cors from "./utils/CORS/cors.js";
 
 async function startServer() {
   try {
@@ -9,6 +11,15 @@ async function startServer() {
 
     const app = express();
     const PORT = process.env.PORT || 4000;
+
+    // analyse les requêtes JSON entrantes et place les données analysées dans req.body.
+    app.use(express.json());
+
+    // CORS Configuration. Permet au frontend de communiquer avec ce backend.
+    app.use(cors);
+
+    // Routes API
+    app.use("/api/auth", usersRoutes);
 
     // Start the Express server
     app.listen(PORT, () => {
