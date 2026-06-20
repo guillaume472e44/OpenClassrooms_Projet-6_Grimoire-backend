@@ -1,8 +1,12 @@
 import "dotenv/config";
 import express from "express";
+import connectToDB from "./utils/db/mongoDBConnection.js";
 
 async function startServer() {
   try {
+    // Connection à MongoDB
+    await connectToDB();
+
     const app = express();
     const PORT = process.env.PORT || 4000;
 
