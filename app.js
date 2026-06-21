@@ -1,7 +1,10 @@
 import "dotenv/config";
+import path from "path";
+import { fileURLToPath } from "url";
 import express from "express";
 import connectToDB from "./utils/db/mongoDBConnection.js";
 import usersRoutes from "./routes/users.js";
+import booksRoutes from "./routes/books.js";
 import cors from "./utils/CORS/cors.js";
 
 async function startServer() {
@@ -11,8 +14,10 @@ async function startServer() {
 
     const app = express();
     const PORT = process.env.PORT || 4000;
+    // __dirname is not defined in ES module scope
+    const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-    // analyse les requêtes JSON entrantes et place les données analysées dans req.body.
+    // Analyse les requêtes JSON entrantes et place les données analysées dans req.body.
     app.use(express.json());
 
     // CORS Configuration. Permet au frontend de communiquer avec ce backend.
@@ -20,8 +25,10 @@ async function startServer() {
 
     // Routes API
     app.use("/api/auth", usersRoutes);
+    app.use("/api/books", booksRoutes);
+    app.use("/images", express.static(path.join(__dirname, "images")));
 
-    // Start the Express server
+    // Démarre le serveur Express
     app.listen(PORT, () => {
       console.log(`serveur démarré sur port http://localhost:${PORT}`);
     });
