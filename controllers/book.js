@@ -29,6 +29,39 @@ export async function createBook(req, res, next) {
   }
 }
 
+/**
+ * Ajoute la note d'un utilisateur et met à jour la note moyenne du livre
+ *
+ * @param {*} req - contient l'id du livre, userId et note de l'utilisateur
+ * @param {*} res - renvoie le livre mis à jour (ajout note et calcul de la moyenne)
+ * @param {*} next
+ */
+export async function postRating(req, res, next) {
+  try {
+    const book = await Book.findById(req.params.id);
+
+    const hasUserAlreadyVoted = book.ratings.find(
+      (grade) => grade.userId === req.auth.userId,
+    );
+    if (hasUserAlreadyVoted) throw Error("Impossible de voter plusieurs fois");
+
+    book.ratings = [
+      ...book.ratings,
+      { userId: req.auth.userId, grade: req.body.rating },
+    ];
+    book.averageRating =
+      book.ratings.reduce((acc, curr) => acc + curr.grade, 0) /
+      book.ratings.length;
+
+    await book.save();
+
+    res.status(200).json(book);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error });
+  }
+}
+
 // **** **** READ **** ****
 
 /**
@@ -75,7 +108,7 @@ export async function findOneBook(req, res, next) {
 export async function findBestBooks(req, res, next) {
   try {
     const books = await Book.find().sort({ averageRating: -1 });
-    const bestBooks = books.slice(0, 4);
+    const bestBooks = books.slice(0, 3);
     res.status(200).json(bestBooks);
   } catch (error) {
     console.error(error.message);

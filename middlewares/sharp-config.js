@@ -7,7 +7,7 @@ export default async (req, res, next) => {
       const filename = `${JSON.parse(req.body.book).title.replaceAll(" ", "_")}${Date.now()}.webp`;
 
       await sharp(req.file.buffer)
-        .resize(404, 568, { fit: "contain", background: "#fff" })
+        .resize(404, 456, { fit: "contain", background: "#fff" })
         .webp({ quality: 92 })
         .toFile(`${destination}/${filename}`);
 

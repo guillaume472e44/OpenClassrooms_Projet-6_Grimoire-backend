@@ -6,6 +6,7 @@ import {
   findBestBooks,
   updateBook,
   deleteBook,
+  postRating,
 } from "../controllers/book.js";
 import auth from "../middlewares/auth.js";
 import multerConfig from "../middlewares/multer-config.js";
@@ -13,6 +14,7 @@ import sharpConfig from "../middlewares/sharp-config.js";
 
 const router = express.Router();
 
+router.post("/:id/rating", auth, postRating);
 router.post("/", auth, multerConfig, sharpConfig, createBook);
 router.get("/bestrating", findBestBooks);
 router.get("/:id", findOneBook);
