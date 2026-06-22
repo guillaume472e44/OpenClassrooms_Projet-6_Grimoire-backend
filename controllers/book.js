@@ -1,6 +1,7 @@
 import { unlink } from "node:fs";
 import { Book } from "../models/Book.js";
 import isAuthorized from "../utils/auth/isAuthorized.js";
+import findBooks from "../utils/books/findBooks.js";
 
 // **** **** CREATE **** ****
 
@@ -49,9 +50,13 @@ export async function postRating(req, res, next) {
       ...book.ratings,
       { userId: req.auth.userId, grade: req.body.rating },
     ];
-    book.averageRating =
+
+    const average =
       book.ratings.reduce((acc, curr) => acc + curr.grade, 0) /
       book.ratings.length;
+    book.averageRating = Number.isInteger(average)
+      ? average
+      : average.toFixed(1);
 
     await book.save();
 
@@ -72,13 +77,7 @@ export async function postRating(req, res, next) {
  * @param {function} next
  */
 export async function findAllBooks(req, res, next) {
-  try {
-    const books = await Book.find();
-    res.status(200).json(books);
-  } catch (error) {
-    console.error(error.message);
-    res.status(404).json({ error });
-  }
+  findBooks(req, res, "all");
 }
 
 /**
@@ -89,13 +88,7 @@ export async function findAllBooks(req, res, next) {
  * @param {function} next
  */
 export async function findOneBook(req, res, next) {
-  try {
-    const book = await Book.findById(req.params.id);
-    res.status(200).json(book);
-  } catch (error) {
-    console.error(error.message);
-    res.status(404).json({ error });
-  }
+  findBooks(req, res, "one");
 }
 
 /**
@@ -106,14 +99,7 @@ export async function findOneBook(req, res, next) {
  * @param {function} next
  */
 export async function findBestBooks(req, res, next) {
-  try {
-    const books = await Book.find().sort({ averageRating: -1 });
-    const bestBooks = books.slice(0, 3);
-    res.status(200).json(bestBooks);
-  } catch (error) {
-    console.error(error.message);
-    res.status(404).json({ error });
-  }
+  findBooks(req, res, "best");
 }
 
 // **** **** UPDATE **** ****

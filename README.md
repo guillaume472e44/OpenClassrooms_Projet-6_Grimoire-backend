@@ -1,11 +1,23 @@
-# ![logo](public/Grimoire-logo.jpg)
+![logo](public/Grimoire-logo.jpg)
 
-<br>
+# Serveur 🗄️
 
-![logo nodejs](public/nodejs-logo.png)
+Node.js + Express
 
-![logo expressjs](public/Expressjs-logo.png)
+# API RESTful 🌐
 
-![logo MongoDB](public/MongoDB-logo.png)
+Base de donnée → MongoDB
 
-![logo mongoose](public/Mongoose-logo.png)
+Modèles et opérations CRUD → mongoose
+
+# Authentification 🔐
+
+Hachage mots de passe → bcrypt
+
+Tokens d'authentification → jsonwebtoken
+
+# Fichiers entrants 🛠️
+
+Capture images → multer
+
+Optimisation images → sharp
