@@ -2,6 +2,14 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { User } from "../models/User.js";
 
+/**
+ * Permet d'ajouter un nouvel utilisateur
+ * mot de passe hashé avec bcrypt
+ *
+ * @param {Object} req - contient le mot de passe non crypté
+ * @param {Object} res - envoie un message de confirmation ou d'erreur
+ * @param {function} next
+ */
 export async function signup(req, res, next) {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -18,6 +26,12 @@ export async function signup(req, res, next) {
   }
 }
 
+/**
+ *
+ * @param {Object} req - contient l'email et le mot de passe
+ * @param {Object} res - envoie un token web JSON et l'_id utilisateur
+ * @param {function} next
+ */
 export async function login(req, res, next) {
   try {
     // Vérif présence email dans la base de donnée

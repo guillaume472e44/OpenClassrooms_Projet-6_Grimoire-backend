@@ -8,8 +8,8 @@ import findBooks from "../utils/books/findBooks.js";
 /**
  * Ajoute un nouveau livre
  *
- * @param {function} req - contient les données renseignées par l'utilisateur
- * @param {function} res - envoie un message de confirmation ou d'erreur
+ * @param {Object} req - contient les données renseignées par l'utilisateur
+ * @param {Object} res - envoie un message de confirmation ou d'erreur
  * @param {function} next
  */
 export async function createBook(req, res, next) {
@@ -33,9 +33,9 @@ export async function createBook(req, res, next) {
 /**
  * Ajoute la note d'un utilisateur et met à jour la note moyenne du livre
  *
- * @param {*} req - contient l'id du livre, userId et note de l'utilisateur
- * @param {*} res - renvoie le livre mis à jour (ajout note et calcul de la moyenne)
- * @param {*} next
+ * @param {Object} req - contient l'id du livre, userId et note de l'utilisateur
+ * @param {Object} res - renvoie le livre mis à jour (ajout note et calcul de la moyenne)
+ * @param {function} next
  */
 export async function postRating(req, res, next) {
   try {
@@ -72,8 +72,8 @@ export async function postRating(req, res, next) {
 /**
  * Cherche et renvoie tous les livres
  *
- * @param {function} req - non utilisé
- * @param {function} res - renvoie tous les livres de la base de donnée ou un message d'erreur
+ * @param {Object} req - non utilisé
+ * @param {Object} res - renvoie tous les livres de la base de donnée ou un message d'erreur
  * @param {function} next
  */
 export async function findAllBooks(req, res, next) {
@@ -83,8 +83,8 @@ export async function findAllBooks(req, res, next) {
 /**
  * Cherche et renvoie un livre grâce à son id
  *
- * @param {function} req - contient l'id renseigné en paramètre
- * @param {function} res - renvoie le livre trouvé ou un message d'erreur
+ * @param {Object} req - contient l'id renseigné en paramètre
+ * @param {Object} res - renvoie le livre trouvé ou un message d'erreur
  * @param {function} next
  */
 export async function findOneBook(req, res, next) {
@@ -94,8 +94,8 @@ export async function findOneBook(req, res, next) {
 /**
  * Cherche et renvoie les 3 livres les mieux notés
  *
- * @param {function} req - non utilisé
- * @param {function} res - renvoie un tableau de 3 livres
+ * @param {Object} req - non utilisé
+ * @param {Object} res - renvoie un tableau de 3 livres
  * @param {function} next
  */
 export async function findBestBooks(req, res, next) {
@@ -107,8 +107,8 @@ export async function findBestBooks(req, res, next) {
 /**
  * Mise à jour du livre
  *
- * @param {function} req - contient les données modifiées, le corps est différent si l'image est présente ou non
- * @param {function} res - envoie un message de confirmation ou d'erreur
+ * @param {Object} req - contient les données modifiées, le corps est différent si l'image est présente ou non
+ * @param {Object} res - envoie un message de confirmation ou d'erreur
  * @param {function} next
  */
 export async function updateBook(req, res, next) {
@@ -149,8 +149,8 @@ export async function updateBook(req, res, next) {
 /**
  * Supprime le livre grâce à son id
  *
- * @param {function} req - contient l'id renseigné en paramètre
- * @param {function} res - envoie un message de confirmation ou d'erreur
+ * @param {Object} req - contient l'id renseigné en paramètre
+ * @param {Object} res - envoie un message de confirmation ou d'erreur
  * @param {function} next
  */
 export async function deleteBook(req, res, next) {
